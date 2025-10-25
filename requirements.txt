@@ -1,0 +1,13 @@
+mcp
+mcp-server
+python-dotenv
+requests
+langchain
+langchain-mcp-adapters
+langchain-core
+langchain-openai
+langgraph
+openai
+aiohttp
+pydantic
+duckduckgo-search

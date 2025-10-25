@@ -1,0 +1,38 @@
+{
+  "mcpServers": {
+    "database-mcp": {
+      "command": "uv",
+      "args": [
+        "run",
+        "database_mcp.py"
+      ],
+      "transport": "stdio"
+
+    },
+    "search-mcp": {
+      "command": "uv",
+      "args": [
+        "run",
+        "websearch_mcp.py"
+      ],
+      "transport": "stdio"
+    },
+    "airbnb": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@openbnb/mcp-server-airbnb",
+        "--ignore-robots-txt"
+      ],
+      "transport": "stdio"
+    },
+    "weather-mcp": {
+      "command": "uv",
+      "args": [
+        "run",
+        "weather_mcp.py"
+      ],
+      "transport": "stdio"
+    }
+  }
+}
