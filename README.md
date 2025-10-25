@@ -1,29 +1,37 @@
 # 🌍 Trip Planner - MCP Agentic System
 A fully functional AI-powered trip planning agent built with LangGraph, LangChain MCP Adapters, and OpenAI's GPT-4o. The system uses 4 independent MCP servers to provide attractions, search results, accommodation options, and weather information.
 🎯 Features
+```
 ✅ ReAct Agent - Reason and Act paradigm for intelligent tool selection
 ✅ 4 MCP Servers - Modular, independently running services
 ✅ Natural Language Interface - Conversational trip planning
 ✅ Real-time Tool Integration - Automatically discovers and uses available tools
 ✅ Timeout Handling - Graceful error management
 ✅ OpenAI GPT-4o - Advanced language model for reasoning
+```
+```
 
-🏗️ Architecture
-┌─────────────────────────────────────────────┐
-│   ReAct Agent (reactagent.py)               │
-│   LangGraph + OpenAI GPT-4o                 │
-└──────────────────┬──────────────────────────┘
-                   │
-        ┌──────────┴──────────┬───────────┬──────────┐
-        │                     │           │          │
-        ▼                     ▼           ▼          ▼
-    ┌─────────┐          ┌────────┐  ┌────────┐  ┌────────┐
-    │Database │          │ Search │  │ Airbnb │  │Weather │
-    │   MCP   │          │  MCP   │  │  MCP   │  │  MCP   │
-    └─────────┘          └────────┘  └────────┘  └────────┘
-       │                     │           │          │
-       ▼                     ▼           ▼          ▼
-    SQLite             DuckDuckGo    Mock Data   Mock Data
+ ┌─────────────────────────────────────────────┐
+ │              ReAct Agent (reactagent.py)    │
+ │         LangGraph + OpenAI GPT-4o           │
+ └──────────────────┬──────────────────────────┘
+                    │
+     ┌──────────────┴───────────────┐
+     │           │           │      │
+     ▼           ▼           ▼      ▼
+ ┌─────────┐ ┌────────┐ ┌────────┐ ┌────────┐
+ │Database │ │ Search │ │ Airbnb │ │Weather │
+ │   MCP   │ │   MCP  │ │   MCP  │ │   MCP  │
+ └─────────┘ └────────┘ └────────┘ └────────┘
+     │           │           │          │
+     ▼           ▼           ▼          ▼
+  SQLite   DuckDuckGo   Mock Data   Mock Data
+
+
+```
+
+
+```
 
 📁 Project Structure
 TripPlannerMCP/
@@ -35,7 +43,7 @@ TripPlannerMCP/
 ├── mcp_servers/
 │   ├── __init__.py
 │   ├── database_mcp.py             # Cities & Attractions
-│   ├── search_mcp.py               # DuckDuckGo Search
+│   ├── websearch_mcp.py               # DuckDuckGo Search
 │   ├── airbnb_mcp.py               # Accommodations
 │   └── weather_mcp.py              # Weather Data
 │
@@ -44,6 +52,9 @@ TripPlannerMCP/
 │   └── db.py                       # SQLite Database
 │
 └── README.md                        # This File
+
+
+```
 
 # 🚀 Quick Start
 
@@ -54,45 +65,49 @@ TripPlannerMCP/
 - Terminal access (need 5 terminals)
 
 ## Installation 
+
 1. Clone/Setup Project
-bashmkdir TripPlannerMCP
-cd TripPlannerMCP
+     mkdir TripPlannerMCP
+     cd TripPlannerMCP
 
-2. Create Virtual Environment
-bashpython -m venv venv
-source venv/bin/activate
+3. Create Virtual Environment
+      python -m venv venv
+      source .venv/bin/activate
 
-3. Install Dependencies
-bashpip install -r requirements.txt
+4. Install Dependencies
+      pip install -r requirements.txt
 
-4. Set Environment Variables
-Create .env file:
+5. Set Environment Variables
+      Create .env file:
 
 
-5. Start MCP Servers (Open 4 Terminals)
-Terminal 1 - Database MCP:
-bashpython mcp_servers/database_mcp.py
-Terminal 2 - Search MCP:
-bashpython mcp_servers/search_mcp.py
-Terminal 3 - Airbnb MCP:
-bashpython mcp_servers/airbnb_mcp.py
-Terminal 4 - Weather MCP:
-bashpython mcp_servers/weather_mcp.py
+6. Start MCP Servers (Open 4 Terminals)
+   
+- **Terminal 1 - Database MCP:**
+  uv run database_mcp.py
+- **Terminal 2 - Search MCP:**
+  uv run websearch_mcp.py
+- **Terminal 3 - Airbnb MCP:**
+  uv run airbnb_mcp.py
+- **Terminal 4 - Weather MCP:**
+  uv run weather_mcp.py
+
 Wait for each to show: MCP server listening on stdio
 
 
-6. Run Agent (New Terminal)
+8. Run Agent (New Terminal)
 bashpython reactagent.py
 
 
-Expected output:
-🚀 Initializing MCP-enabled React Agent
+# Expected output:
+
+🚀 Initializing MCP-React Agent
 ======================================================================
-📂 Loading mcp.json config...
-✅ Loaded config with 4 servers
-📡 Connecting to MCP servers...
-🔧 Loading tools from MCP servers...
-✅ Loaded 7 tools:
+- 📂 Loading mcp.json config...
+- ✅ Loaded config with 4 servers
+- 📡 Connecting to MCP servers...
+- 🔧 Loading tools from MCP servers...
+- ✅ Loaded 7 tools:
    - get_cities
    - get_top_attractions
    - search_attraction
@@ -103,9 +118,8 @@ Expected output:
 🤖 Initializing OpenAI LLM...
 🔄 Creating React agent...
 
-======================================================================
-✅ Agent Ready!
-======================================================================
+ ## Agent Ready!
+
 
 📝 Enter your query (or 'quit' to exit):
 You:
@@ -150,30 +164,32 @@ Agent Response:
 ==================================================================================================
 # 🔧 Configuration
    
-mcp.json
+## mcp.json
+```
 Simple configuration file that registers all MCP servers:
 json{
   "mcpServers": {
     "database-mcp": {
       "command": "python",
-      "args": ["mcp_servers/database_mcp.py"]
+      "args": ["database_mcp.py"]
     },
     "search-mcp": {
       "command": "python",
-      "args": ["mcp_servers/search_mcp.py"]
+      "args": ["websearch_mcp.py"]
     },
     "airbnb-mcp": {
       "command": "python",
-      "args": ["mcp_servers/airbnb_mcp.py"]
+      "args": ["airbnb_mcp.py"]
     },
     "weather-mcp": {
       "command": "python",
-      "args": ["mcp_servers/weather_mcp.py"]
+      "args": ["weather_mcp.py"]
     }
   }
 }
-Environment Variables (.env)
-OPENAI_API_KEY=sk-your-key-here
+```
+## Environment Variables (.env)
+  OPENAI_API_KEY=sk-your-key-here
 
 # 📊 MCP Servers Overview
 
@@ -187,7 +203,7 @@ get_top_attractions(city) - Returns top 3 attractions
 
 
 
-## Search MCP (search_mcp.py)
+## Search MCP (websearch_mcp.py)
 
 Purpose: Search for detailed attraction information
 Tools:
@@ -214,7 +230,7 @@ Tools:
 get_current_weather(city) - Get current temperature, condition, and advice
 
 
-
+```
 
 🔄 Data Flow
 User Input
@@ -227,7 +243,7 @@ mcp.json Configuration
     ↓
 4 MCP Servers (parallel execution)
     ├─ database_mcp.py
-    ├─ search_mcp.py
+    ├─ websearch_mcp.py
     ├─ airbnb_mcp.py
     └─ weather_mcp.py
     ↓
@@ -236,3 +252,4 @@ Agent Processes Results
 Synthesized Response
     ↓
 User Output
+```
