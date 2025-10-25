@@ -1,7 +1,9 @@
 # 🌍 Trip Planner - MCP Agentic System
 A fully functional AI-powered trip planning agent built with LangGraph, LangChain MCP Adapters, and OpenAI's GPT-4o. The system uses 4 independent MCP servers to provide attractions, search results, accommodation options, and weather information.
-🎯 Features
+
 ```
+🎯 Features
+
 ✅ ReAct Agent - Reason and Act paradigm for intelligent tool selection
 ✅ 4 MCP Servers - Modular, independently running services
 ✅ Natural Language Interface - Conversational trip planning
